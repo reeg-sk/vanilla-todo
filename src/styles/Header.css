@@ -1,0 +1,42 @@
+header {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+header h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #fff;
+  font-family: "Courier New", Courier, monospace;
+  margin: 0;
+}
+
+.input-section {
+  display: flex;
+  justify-content: center;
+}
+
+.input-section input {
+  font-size: 1.7rem;
+  border: none;
+  padding: 0.5rem;
+  min-width: 500px;
+}
+
+.input-section input:focus {
+  outline: none;
+}
+
+.input-section button {
+  border: none;
+  width: 47.5px;
+  font-size: 2rem;
+  background-color: rgb(215, 87, 87);
+  color: white;
+  cursor: pointer;
+}
+
+.input-section button:hover,
+.input-section button:focus {
+  background-color: rgb(212, 115, 115);
+}
