@@ -1,15 +1,21 @@
 import "./styles/App.css";
 import "./styles/Header.css";
 import "./styles/List.css";
+import axios from "axios";
+import "@babel/polyfill";
 
-const todos = ["My first TODO", "My second TODO"];
+const getTodos = async () => {
+  const result = await axios.get("http://localhost:3000/todos");
+  result.data.map((todo) => todos.push(todo.Title));
+  todos.forEach(renderTodos);
+};
+
+let todos = [];
 
 function getInputValue(event) {
   let inputValue = event.target.value;
   console.log(inputValue);
 }
-
-todos.forEach(renderTodos);
 
 function renderTodos(todo) {
   const list = document.getElementById("list");
@@ -19,3 +25,4 @@ function renderTodos(todo) {
 }
 
 window.getInputValue = getInputValue;
+getTodos();
