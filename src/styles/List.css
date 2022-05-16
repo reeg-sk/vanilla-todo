@@ -1,0 +1,20 @@
+.list-section {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.list-section ul {
+  padding: 1rem;
+  list-style: none;
+  background-color: white;
+  min-width: 300px;
+}
+
+.list-section ul li {
+  background-color: #eee;
+  margin: 0.2rem 0;
+  padding: 0.4rem;
+  cursor: pointer;
+  border-radius: 8px;
+}

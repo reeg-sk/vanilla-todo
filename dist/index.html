@@ -10,7 +10,14 @@
     <header><h1>TODO App</h1></header>
     <main>
       <section class="input-section">
-        <input type="text" /><button>+</button>
+        <input
+          id="todo-input"
+          type="text"
+          oninput="getInputValue(event)"
+        /><button>+</button>
+      </section>
+      <section class="list-section">
+        <ul id="list"></ul>
       </section>
     </main>
   </body>
