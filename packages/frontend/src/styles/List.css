@@ -17,4 +17,22 @@
   padding: 0.4rem;
   cursor: pointer;
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.list-delete {
+  background-color: rgb(239 54 54);
+  color: white;
+  padding: 0.25rem 0.45rem 0.12rem;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  display: none;
+  position: absolute;
+  right: 5px;
+}
+
+.list-delete:hover {
+  background-color: rgb(240, 98, 98);
 }

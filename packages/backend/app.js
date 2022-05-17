@@ -39,6 +39,20 @@ app.post("/todos", (req, res) => {
   });
 });
 
+app.delete("/todo/:id", (req, res) => {
+  db.run(
+    "DELETE FROM Todos WHERE id = ?",
+    req.params.id,
+    function (err, result) {
+      if (err) {
+        res.status(400).json({ error: result.message });
+        return;
+      }
+      res.json({ message: "deleted", changes: this.changes });
+    }
+  );
+});
+
 app.listen(3000, () => {
   console.log("Server started!");
 });

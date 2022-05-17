@@ -4,8 +4,12 @@ import "./styles/List.css";
 import axios from "axios";
 import "@babel/polyfill";
 
+let todos = [];
+
 const todoForm = document.getElementById("new_todo_form");
 const todoList = document.getElementById("todo_list");
+const todoListItems = document.querySelectorAll(".list-item");
+console.log(todoListItems);
 
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -26,7 +30,7 @@ async function renderTodos() {
   while (todoList.firstChild) {
     todoList.firstChild.remove();
   }
-  const todos = await getAllTodos();
+  await getAllTodos();
   todos.forEach((todo) => {
     addTodo(todo.title);
   });
@@ -39,12 +43,35 @@ function addTodo(newTodo) {
   const newTodoText = document.createElement("span");
   newTodoText.innerText = newTodo;
 
+  const newTodoDelete = document.createElement("a");
+  newTodoDelete.setAttribute("class", "list-delete");
+  newTodoDelete.innerText = "X";
+
   todoList.appendChild(newTodoItem);
   newTodoItem.appendChild(newTodoText);
+  newTodoItem.appendChild(newTodoDelete);
+
+  newTodoItem.addEventListener("mouseover", function () {
+    newTodoDelete.style.display = "block";
+  });
+
+  newTodoItem.addEventListener("mouseleave", function () {
+    newTodoDelete.style.display = "none";
+  });
+
+  newTodoDelete.addEventListener("click", function () {
+    const toDelete = todos.filter((todo) => todo.title === newTodo)[0];
+    axios
+      .delete(`http://localhost:3000/todo/${toDelete.id}`)
+      .then(() => renderTodos());
+  });
 }
 
 function getAllTodos() {
-  return axios.get("http://localhost:3000/todos").then((res) => res.data);
+  return axios.get("http://localhost:3000/todos").then((res) => {
+    todos = res.data;
+    console.log(todos);
+  });
 }
 
 renderTodos();
