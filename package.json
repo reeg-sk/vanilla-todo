@@ -6,6 +6,9 @@
     "packages/frontend",
     "packages/backend"
   ],
+  "scripts": {
+    "be:dev": "npm run dev --workspace packages/backend"
+  },
   "author": "Lukas Pokryvka",
   "license": "MIT"
 }

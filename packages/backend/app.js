@@ -1,52 +1,44 @@
 const express = require("express");
-const sqlite = require("sqlite3").verbose();
-const path = require("path");
 const cors = require("cors");
+const db = require("./database");
 
 const app = express();
 
 app.use(cors());
-
-const dbName = path.join(__dirname, "data", "todos.db");
-const db = new sqlite.Database(dbName, (err) => {
-  if (err) {
-    return console.error(err.message);
-  }
-  console.log("Successful connection to the database 'todos.db'");
-});
-
-const sql_create = `CREATE TABLE IF NOT EXISTS Todos (
-  ID INTEGER PRIMARY KEY AUTOINCREMENT,
-  Title VARCHAR(100) NOT NULL,
-  Is_done INTEGER NOT NULL
-);`;
-
-const sql_insert = `INSERT INTO Todos (ID, Title, Is_Done) VALUES
-  (1, 'Upratat', 0),
-  (2, 'Navarit', 0),
-  (3, 'Vyvencit', 0);`;
-
-db.run(sql_create, (err) => {
-  if (err) {
-    return console.error(err.message);
-  }
-  console.log("Successful creation of the 'Todos' table");
-});
-
-db.run(sql_insert, (err) => {
-  if (err) {
-    return console.error(err.message);
-  }
-  console.log("Successful creation of 3 books");
-});
+app.use(express.json());
 
 app.get("/todos", (req, res) => {
-  const sql = "SELECT * FROM Todos ORDER BY Title";
-  db.all(sql, [], (err, rows) => {
+  const sql = "select * from Todos";
+  const params = [];
+  db.all(sql, params, (err, rows) => {
     if (err) {
-      return console.error(err.message);
+      res.status(400).json({ error: err.message });
+      return;
     }
-    res.status(200).send(rows);
+    res.json({
+      message: "success",
+      data: rows,
+    });
+  });
+});
+
+app.post("/todos", (req, res) => {
+  const data = {
+    title: req.body.title,
+    isDone: req.body.isDone,
+  };
+  const sql = "INSERT INTO Todos (title, isDone) VALUES (?,?)";
+  const params = [data.title, data.isDone];
+  db.run(sql, params, function (err, result) {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: "success",
+      data: result,
+      id: this.lastID,
+    });
   });
 });
 
