@@ -9,15 +9,11 @@
   <body>
     <header><h1>TODO App</h1></header>
     <main>
-      <section class="input-section">
-        <input
-          id="todo-input"
-          type="text"
-          oninput="getInputValue(event)"
-        /><button>+</button>
-      </section>
+      <form id="new_todo_form" class="input-section">
+        <input id="todo_input" type="text" /><button type="submit">+</button>
+      </form>
       <section class="list-section">
-        <ul id="list"></ul>
+        <ul id="todo_list" class="list"></ul>
       </section>
     </main>
   </body>

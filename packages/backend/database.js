@@ -1,7 +1,7 @@
 const sqlite = require("sqlite3").verbose();
 const path = require("path");
 
-const dbName = path.join(__dirname, "data", "todos.db");
+const dbName = path.join(__dirname, "data", "todos.sqlite");
 const db = new sqlite.Database(dbName, (err) => {
   if (err) {
     console.error(err.message);

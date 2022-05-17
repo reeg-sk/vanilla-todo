@@ -4,14 +4,14 @@
   padding-top: 2rem;
 }
 
-.list-section ul {
+.list {
   padding: 1rem;
   list-style: none;
   background-color: white;
   min-width: 300px;
 }
 
-.list-section ul li {
+.list-item {
   background-color: #eee;
   margin: 0.2rem 0;
   padding: 0.4rem;

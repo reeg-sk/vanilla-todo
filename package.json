@@ -7,7 +7,8 @@
     "packages/backend"
   ],
   "scripts": {
-    "be:dev": "npm run dev --workspace packages/backend"
+    "be:dev": "npm run dev --workspace packages/backend",
+    "fe:dev": "npm run dev --workspace packages/frontend"
   },
   "author": "Lukas Pokryvka",
   "license": "MIT"
