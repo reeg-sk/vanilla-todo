@@ -39,6 +39,24 @@ app.post("/todos", (req, res) => {
   });
 });
 
+app.patch("/todo/:id", (req, res) => {
+  db.run(
+    "UPDATE Todos set isDone = ? WHERE id = ?",
+    [req.body.isDone, req.params.id],
+    function (err, result) {
+      if (err) {
+        res.status(400).json({ error: res.message });
+        return;
+      }
+      res.json({
+        message: "success",
+        data: result,
+        changes: this.changes,
+      });
+    }
+  );
+});
+
 app.delete("/todo/:id", (req, res) => {
   db.run(
     "DELETE FROM Todos WHERE id = ?",

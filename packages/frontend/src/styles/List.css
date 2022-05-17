@@ -36,3 +36,7 @@
 .list-delete:hover {
   background-color: rgb(240, 98, 98);
 }
+
+.list-item__done {
+  background-color: aqua;
+}

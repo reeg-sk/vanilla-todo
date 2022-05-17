@@ -59,10 +59,23 @@ function addTodo(newTodo) {
     newTodoDelete.style.display = "none";
   });
 
-  newTodoDelete.addEventListener("click", function () {
-    const toDelete = todos.filter((todo) => todo.title === newTodo)[0];
+  newTodoItem.addEventListener("click", function () {
+    const todoToUpdate = todos.filter((todo) => todo.title === newTodo)[0];
+    let valueToUpdate;
+    if (todoToUpdate.isDone === 0) valueToUpdate = 1;
+    else valueToUpdate = 0;
     axios
-      .delete(`http://localhost:3000/todo/${toDelete.id}`)
+      .patch(`http://localhost:3000/todo/${todoToUpdate.id}`, {
+        isDone: valueToUpdate,
+      })
+      .then(() => renderTodos());
+  });
+
+  newTodoDelete.addEventListener("click", function (e) {
+    e.stopPropagation();
+    const todoToDelete = todos.filter((todo) => todo.title === newTodo)[0];
+    axios
+      .delete(`http://localhost:3000/todo/${todoToDelete.id}`)
       .then(() => renderTodos());
   });
 }
