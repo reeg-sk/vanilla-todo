@@ -1,7 +1,7 @@
 import "./styles/App.css";
 import "./styles/Header.css";
 import "./styles/List.css";
-import axios from "axios";
+import api from "./api/api";
 import "@babel/polyfill";
 
 let todos = [];
@@ -14,8 +14,8 @@ console.log(todoListItems);
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const newTodoInputValue = todoForm.elements.todo_input;
-  axios
-    .post("http://localhost:3000/todos", {
+  api
+    .post("/todos", {
       title: newTodoInputValue.value,
       isDone: 0,
     })
@@ -32,16 +32,17 @@ async function renderTodos() {
   }
   await getAllTodos();
   todos.forEach((todo) => {
-    addTodo(todo.title);
+    addTodo(todo);
   });
 }
 
 function addTodo(newTodo) {
   const newTodoItem = document.createElement("li");
   newTodoItem.setAttribute("class", "list-item");
+  if (newTodo.isDone) newTodoItem.classList.add("list-item__done");
 
   const newTodoText = document.createElement("span");
-  newTodoText.innerText = newTodo;
+  newTodoText.innerText = newTodo.title;
 
   const newTodoDelete = document.createElement("a");
   newTodoDelete.setAttribute("class", "list-delete");
@@ -60,12 +61,14 @@ function addTodo(newTodo) {
   });
 
   newTodoItem.addEventListener("click", function () {
-    const todoToUpdate = todos.filter((todo) => todo.title === newTodo)[0];
+    const todoToUpdate = todos.filter(
+      (todo) => todo.title === newTodo.title
+    )[0];
     let valueToUpdate;
     if (todoToUpdate.isDone === 0) valueToUpdate = 1;
     else valueToUpdate = 0;
-    axios
-      .patch(`http://localhost:3000/todo/${todoToUpdate.id}`, {
+    api
+      .patch(`/todo/${todoToUpdate.id}/isdone`, {
         isDone: valueToUpdate,
       })
       .then(() => renderTodos());
@@ -73,15 +76,15 @@ function addTodo(newTodo) {
 
   newTodoDelete.addEventListener("click", function (e) {
     e.stopPropagation();
-    const todoToDelete = todos.filter((todo) => todo.title === newTodo)[0];
-    axios
-      .delete(`http://localhost:3000/todo/${todoToDelete.id}`)
-      .then(() => renderTodos());
+    const todoToDelete = todos.filter(
+      (todo) => todo.title === newTodo.title
+    )[0];
+    api.delete(`/todo/${todoToDelete.id}`).then(() => renderTodos());
   });
 }
 
 function getAllTodos() {
-  return axios.get("http://localhost:3000/todos").then((res) => {
+  return api.get("/todos").then((res) => {
     todos = res.data;
     console.log(todos);
   });
