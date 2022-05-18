@@ -1,5 +1,6 @@
 body {
+  font-family: 'Courier New', Courier, monospace;
   min-height: 100vh;
-  background-color: #b4d455;
+  background-color: #FFF5B2;
   margin: 0;
 }

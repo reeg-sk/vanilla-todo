@@ -5,38 +5,58 @@
 }
 
 .list {
+  border-radius: 6px;
   padding: 1rem;
   list-style: none;
   background-color: white;
-  min-width: 300px;
+  min-width: 350px;
 }
 
 .list-item {
-  background-color: #eee;
+  background-color: #F4E04D;
   margin: 0.2rem 0;
-  padding: 0.4rem;
+  padding: 0.8rem 1rem;
   cursor: pointer;
   border-radius: 8px;
   display: flex;
   align-items: center;
   position: relative;
+  transition: 0.2s background ease-out;
+}
+
+.list-item:hover {
+  background-color: #ffee71;
+}
+
+.list-item:hover .list-delete, .list-item:focus .list-delete {
+  transition: 0.2s all ease-in;
+  opacity: 1;
 }
 
 .list-delete {
-  background-color: rgb(239 54 54);
+  background-color: #ef3636;
   color: white;
   padding: 0.25rem 0.45rem 0.12rem;
   font-size: 0.8rem;
   border-radius: 5px;
-  display: none;
+  opacity: 0;
   position: absolute;
-  right: 5px;
+  right: 10px;
 }
 
 .list-delete:hover {
-  background-color: rgb(240, 98, 98);
+  background-color: #f06262;
 }
 
 .list-item__done {
-  background-color: #f4f737;
+  color: #fff;
+  text-decoration: line-through;
+  background-color: #17B890;
 }
+
+.list-item__done:hover {
+  color: #fff;
+  text-decoration: line-through;
+  background-color: #11a681;
+}
+

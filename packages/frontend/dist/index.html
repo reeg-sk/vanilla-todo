@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanilla JS Todo</title>
-  </head>
-  <body>
-    <header><h1>TODO App</h1></header>
-    <main>
-      <form id="new_todo_form" class="input-section">
-        <input id="todo_input" type="text" /><button type="submit">+</button>
-      </form>
-      <section class="list-section">
-        <ul id="todo_list" class="list"></ul>
-      </section>
-    </main>
-  </body>
-  <script src="bundle.js"></script>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vanilla JS Todo</title>
+</head>
+
+<body>
+  <header>
+    <h1>TODO App</h1>
+  </header>
+  <main>
+    <form id="new_todo_form" class="input-section">
+      <input id="todo_input" type="text" placeholder="Your todo..." required />
+      <button type="submit" title="Add Todo">+</button>
+    </form>
+    <section class="list-section">
+      <ul id="todo_list" class="list"></ul>
+    </section>
+  </main>
+</body>
+<script src="bundle.js"></script>
+
 </html>

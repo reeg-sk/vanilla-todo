@@ -39,6 +39,8 @@ async function renderTodos() {
 function addTodo(newTodo) {
   const newTodoItem = document.createElement("li");
   newTodoItem.setAttribute("class", "list-item");
+  newTodoItem.setAttribute("tabindex", "0");
+
   if (newTodo.isDone) newTodoItem.classList.add("list-item__done");
 
   const newTodoText = document.createElement("span");
@@ -46,21 +48,45 @@ function addTodo(newTodo) {
 
   const newTodoDelete = document.createElement("a");
   newTodoDelete.setAttribute("class", "list-delete");
+  newTodoDelete.setAttribute("title", "Delete Todo");
+
   newTodoDelete.innerText = "X";
 
   todoList.appendChild(newTodoItem);
   newTodoItem.appendChild(newTodoText);
   newTodoItem.appendChild(newTodoDelete);
 
-  newTodoItem.addEventListener("mouseover", function () {
-    newTodoDelete.style.display = "block";
-  });
+  newTodoItem.addEventListener("keyup", function (e) {
+    switch(e.code) {
+      case 'Space':
+        updateTodo();
+        break;
+      case 'Delete':
+        deleteTodo(e)
+        break;
 
-  newTodoItem.addEventListener("mouseleave", function () {
-    newTodoDelete.style.display = "none";
-  });
+      default:
+        break;
+    }
+  })
 
   newTodoItem.addEventListener("click", function () {
+    updateTodo();
+  });
+
+  newTodoDelete.addEventListener("click", function (e) {
+    deleteTodo(e);
+  });
+
+  function deleteTodo(e) {
+    e.stopPropagation();
+      const todoToDelete = todos.filter(
+        (todo) => todo.title === newTodo.title
+      )[0];
+      api.delete(`/todo/${todoToDelete.id}`).then(() => renderTodos());
+  }
+  
+  function updateTodo() {
     const todoToUpdate = todos.filter(
       (todo) => todo.title === newTodo.title
     )[0];
@@ -72,15 +98,7 @@ function addTodo(newTodo) {
         isDone: valueToUpdate,
       })
       .then(() => renderTodos());
-  });
-
-  newTodoDelete.addEventListener("click", function (e) {
-    e.stopPropagation();
-    const todoToDelete = todos.filter(
-      (todo) => todo.title === newTodo.title
-    )[0];
-    api.delete(`/todo/${todoToDelete.id}`).then(() => renderTodos());
-  });
+  }
 }
 
 function getAllTodos() {
